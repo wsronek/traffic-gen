@@ -1,6 +1,7 @@
 import time
 import random
-from locust import HttpUser, between, task
+from locust import HttpLocust, HttpUser, between, task
+from locust.clients import HttpSession
 
 products = [
     '0PUK6V6EV0',
@@ -15,7 +16,7 @@ products = [
 
 class APISecurityValidation(HttpUser):
     host = "https://sol-eng-lb2.perf.f5xc.app"
-    
+
     wait_time = between(3, 10)
 
     def on_start(self):
