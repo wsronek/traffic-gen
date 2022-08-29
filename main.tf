@@ -12,16 +12,16 @@ provider "aws" {
 }
 
 
-resource "aws_s3_bucket" "traffic-gen" {
+resource "aws_s3_bucket" "traffic-gen-bucket" {
   bucket = "traffic-gen"
   tags = {
     Name = "Traffic generator python locust script"
   }
 }
 
-resource "aws_s3_bucket_object" "traffic-gen-object" {
+resource "aws_s3_object" "traffic-gen-object" {
   key    = "traffic-gen"
-  bucket = aws_s3_bucket.traffic-gen.id
+  bucket = aws_s3_bucket.traffic-gen-bucket.id
   source = "${path.module}/traffic-gen.py"
 }
 
@@ -95,13 +95,13 @@ resource "aws_iam_instance_profile" "traffic-gen-iam-instance-profile" {
 resource "aws_instance" "traffic-gen-instance" {
   ami                    = "ami-052efd3df9dad4825"
   instance_type          = "t2.micro"
-  count                  = 3
-  vpc_security_group_ids = [ aws_security_group.ws-allow-ssh.id ]
+  count                  = 2
+  vpc_security_group_ids = [ aws_security_group.allow-ssh.id ]
   iam_instance_profile   = "${aws_iam_instance_profile.traffic-gen-iam-instance-profile.name}"
   subnet_id              = "subnet-e02dc286"
   key_name               = "sol-eng-us-e"
-  user_data              = templatefile("${path.module}/init.sh", {
-    traffic-gen-script-s3-bucket = aws_s3_bucket.ws-bucket.id
+  user_data              = templatefile("${path.module}/traffic-gen-init.sh", {
+    traffic-gen-script-s3-bucket = aws_s3_bucket.traffic-gen-bucket.id
   })
   tags = {
     Name = "${var.prefix}-${count.index}"
