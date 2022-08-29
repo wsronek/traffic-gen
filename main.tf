@@ -92,6 +92,10 @@ resource "aws_iam_instance_profile" "traffic-gen-iam-instance-profile" {
   role = "${aws_iam_role.traffic-gen-iam-role.name}"
 }
 
+data "local_file" "urls" {
+  filename = "${path.module}/urls"
+}
+
 resource "aws_instance" "traffic-gen-instance" {
   ami                    = "ami-052efd3df9dad4825"
   instance_type          = "t2.micro"
@@ -102,6 +106,7 @@ resource "aws_instance" "traffic-gen-instance" {
   key_name               = "sol-eng-us-e"
   user_data              = templatefile("${path.module}/traffic-gen-init.sh", {
     traffic-gen-script-s3-bucket = aws_s3_bucket.traffic-gen-bucket.id
+    traffic-gen-urls             = data.local_file.urls.content
   })
   tags = {
     Name = "${var.prefix}-${count.index}"
