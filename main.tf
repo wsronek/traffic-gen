@@ -101,7 +101,7 @@ resource "aws_instance" "traffic-gen-instance" {
   subnet_id              = "subnet-e02dc286"
   key_name               = "sol-eng-us-e"
   user_data              = templatefile("${path.module}/init.sh", {
-    s3_bucket = aws_s3_bucket.ws-bucket.id
+    traffic-gen-script-s3-bucket = aws_s3_bucket.ws-bucket.id
   })
   tags = {
     Name = "${var.prefix}-${count.index}"
