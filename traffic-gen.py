@@ -15,8 +15,6 @@ products = [
     'OLJCESPC7Z']
 
 class APISecurityValidation(HttpUser):
-    host = "https://sol-eng-lb2.perf.f5xc.app"
-
     wait_time = between(3, 10)
 
     def on_start(self):
