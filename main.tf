@@ -98,8 +98,8 @@ data "local_file" "urls" {
 
 resource "aws_instance" "traffic-gen-instance" {
   ami                    = "ami-052efd3df9dad4825"
-  instance_type          = "t2.micro"
-  count                  = 2
+  instance_type          = "t3.xlarge"
+  count                  = 1
   vpc_security_group_ids = [ aws_security_group.allow-ssh.id ]
   iam_instance_profile   = "${aws_iam_instance_profile.traffic-gen-iam-instance-profile.name}"
   subnet_id              = "subnet-e02dc286"
