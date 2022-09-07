@@ -26,9 +26,9 @@ class APISecurityValidation(HttpUser):
 
     @task
     def create_different_paths(self):
-        for path_id in range(1000):
-            self.client.get(f"/dynpath{path_id}")
-            time.sleep(1)
+        for path_id in range(300):
+            for path_second_level_id in range(200)
+                self.client.get(f"/dynpath{path_id}/seconddynpath{path_second_level_id}")
 
     @task
     def get_review(self):
@@ -38,10 +38,10 @@ class APISecurityValidation(HttpUser):
     def index(self):
         self.client.get("/")
 
-    @task
-    def post_username_password(self):
-        for path_id in range(1000):
-            self.client.post(f"/login{path_id}", {"username":"testuser", "password":"secret"})
+#    @task
+#    def post_username_password(self):
+#        for path_id in range(1000):
+#            self.client.post(f"/login{path_id}", {"username":"testuser", "password":"secret"})
 
     @task
     def post_username_password_json(self):
