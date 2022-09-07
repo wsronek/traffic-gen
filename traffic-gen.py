@@ -27,7 +27,7 @@ class APISecurityValidation(HttpUser):
     @task
     def create_different_paths(self):
         for path_id in range(300):
-            for path_second_level_id in range(200)
+            for path_second_level_id in range(200):
                 self.client.get(f"/dynpath{path_id}/seconddynpath{path_second_level_id}")
 
     @task
