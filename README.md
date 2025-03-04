@@ -28,5 +28,5 @@ terraform destroy --auto-approve
 
 ---
 
-## 4. More information
+## 4. More information ...
 
